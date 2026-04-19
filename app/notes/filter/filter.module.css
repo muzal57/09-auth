@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+}
+.sidebar {
+  width: 220px;
+}
+.content {
+  flex: 1;
+}
+.menuList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menuItem {
+  margin-bottom: 8px;
+}
+.menuLink {
+  text-decoration: none;
+  color: #1f2937;
+  font-weight: 500;
+}
+.menuLink:hover {
+  color: #111827;
+}
+.active {
+  font-weight: 700;
+}
