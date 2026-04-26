@@ -1,15 +1,18 @@
-import type { Metadata } from "next";
-import AuthRouteLayoutClient from "./AuthRouteLayoutClient";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Authentication - NoteHub",
-  description: "Sign in or sign up to manage your notes.",
-};
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AuthRouteLayoutClient>{children}</AuthRouteLayoutClient>;
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
+  return <>{children}</>;
 }

@@ -9,14 +9,11 @@ import { isAxiosError } from "axios";
 export async function GET() {
   try {
     const cookieStore = await cookies();
-    const cookieHeader = cookieStore.toString();
 
     const res = await api.get("/users/me", {
-      headers: cookieHeader
-        ? {
-            Cookie: cookieHeader,
-          }
-        : undefined,
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
     });
 
     return NextResponse.json(res.data, { status: res.status });

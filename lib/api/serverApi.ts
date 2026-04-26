@@ -8,7 +8,15 @@ export interface NotesResponse {
   totalPages: number;
 }
 
-const getAuthHeaders = async () => {
+const getAuthHeaders = async (cookieHeader?: string) => {
+  if (cookieHeader) {
+    return {
+      headers: {
+        Cookie: cookieHeader,
+      },
+    };
+  }
+
   const requestHeaders = await headers();
   const incomingCookieHeader = requestHeaders.get("cookie");
   if (incomingCookieHeader) {
@@ -20,15 +28,15 @@ const getAuthHeaders = async () => {
   }
 
   const cookieStore = await cookies();
-  const cookieHeader = ["accessToken", "refreshToken"]
+  const generatedCookieHeader = ["accessToken", "refreshToken"]
     .map((name) => cookieStore.get(name)?.value)
     .filter(Boolean)
     .join("; ");
 
-  return cookieHeader
+  return generatedCookieHeader
     ? {
         headers: {
-          Cookie: cookieHeader,
+          Cookie: generatedCookieHeader,
         },
       }
     : {};
