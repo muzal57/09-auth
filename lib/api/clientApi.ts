@@ -26,7 +26,7 @@ export const createNote = (noteData: NoteFormData) =>
   axiosInstance.post<Note>("/notes", noteData).then((res) => res.data);
 
 export const deleteNote = (id: string) =>
-  axiosInstance.delete(`/notes/${id}`).then((res) => res.data);
+  axiosInstance.delete<void>(`/notes/${id}`).then((res) => res.data);
 
 export const register = (data: { email: string; password: string }) =>
   axiosInstance.post<User>("/auth/register", data).then((res) => res.data);

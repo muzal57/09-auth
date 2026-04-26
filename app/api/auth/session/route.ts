@@ -5,24 +5,23 @@ import { parse } from "cookie";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../../_utils/utils";
 
-const buildCookieHeader = (cookieStore: Awaited<ReturnType<typeof cookies>>) =>
-  cookieStore
-    .getAll()
-    .map((cookie) => `${cookie.name}=${cookie.value}`)
-    .join("; ");
-
 export async function GET() {
   try {
     const cookieStore = await cookies();
-    const cookieHeader = buildCookieHeader(cookieStore);
+    const accessToken = cookieStore.get("accessToken")?.value;
+    const refreshToken = cookieStore.get("refreshToken")?.value;
 
-    if (!cookieHeader) {
+    if (accessToken) {
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
+    if (!refreshToken) {
       return NextResponse.json({ success: false }, { status: 200 });
     }
 
     const apiRes = await api.get("auth/session", {
       headers: {
-        Cookie: cookieHeader,
+        Cookie: cookieStore.toString(),
       },
     });
 
@@ -35,7 +34,7 @@ export async function GET() {
 
         const options = {
           expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
-          path: "/",
+          path: parsed.Path,
           maxAge: Number(parsed["Max-Age"]),
         };
 
@@ -44,9 +43,10 @@ export async function GET() {
         if (parsed.refreshToken)
           cookieStore.set("refreshToken", parsed.refreshToken, options);
       }
+      return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: false }, { status: 200 });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);

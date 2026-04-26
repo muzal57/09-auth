@@ -65,11 +65,7 @@ export const getMe = async () => {
   return response.data;
 };
 
-export const checkSession = async (): Promise<boolean> => {
+export const checkSession = async () => {
   const auth = await getAuthHeaders();
-  const response = await axiosInstance.get<{ success: boolean }>(
-    "/auth/session",
-    auth,
-  );
-  return response.data.success;
+  return axiosInstance.get<{ success: boolean }>("/auth/session", auth);
 };

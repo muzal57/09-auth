@@ -56,6 +56,9 @@ const NotesClient = ({ tag }: NotesClientProps) => {
     return <div className={css.error}>Error: {error?.message}</div>;
   }
 
+  const notes = data?.notes ?? [];
+  const totalPages = data?.totalPages ?? 1;
+
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -67,15 +70,17 @@ const NotesClient = ({ tag }: NotesClientProps) => {
       <SearchBox onSearch={handleSearch} />
       {isLoading ? (
         <div className={css.loading}>Loading notes...</div>
-      ) : (
+      ) : notes.length > 0 ? (
         <>
-          <NoteList notes={data?.notes || []} />
+          <NoteList notes={notes} />
           <Pagination
             currentPage={currentPage}
-            totalPages={data?.totalPages || 1}
+            totalPages={totalPages}
             onPageChange={handlePageChange}
           />
         </>
+      ) : (
+        <div className={css.empty}>No notes available.</div>
       )}
     </div>
   );

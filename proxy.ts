@@ -13,7 +13,7 @@ const hasAuthCookie = (request: NextRequest) => {
   return Boolean(accessToken || refreshToken);
 };
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const authenticated = hasAuthCookie(request);
 

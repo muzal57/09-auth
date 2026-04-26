@@ -13,9 +13,7 @@ export async function POST() {
 
     await api.post("auth/logout", null, {
       headers: {
-        Cookie: [`accessToken=${accessToken}`, `refreshToken=${refreshToken}`]
-          .filter(Boolean)
-          .join("; "),
+        Cookie: cookieStore.toString(),
       },
     });
 

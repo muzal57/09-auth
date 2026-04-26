@@ -14,10 +14,7 @@ export async function GET(request: Request, { params }: Props) {
     const { id } = await params;
     const res = await api(`/notes/${id}`, {
       headers: {
-        Cookie: cookieStore
-          .getAll()
-          .map((cookie) => `${cookie.name}=${cookie.value}`)
-          .join("; "),
+        Cookie: cookieStore.toString(),
       },
     });
     return NextResponse.json(res.data, { status: res.status });
@@ -44,10 +41,7 @@ export async function DELETE(request: Request, { params }: Props) {
 
     const res = await api.delete(`/notes/${id}`, {
       headers: {
-        Cookie: cookieStore
-          .getAll()
-          .map((cookie) => `${cookie.name}=${cookie.value}`)
-          .join("; "),
+        Cookie: cookieStore.toString(),
       },
     });
     return NextResponse.json(res.data, { status: res.status });
@@ -75,10 +69,7 @@ export async function PATCH(request: Request, { params }: Props) {
 
     const res = await api.patch(`/notes/${id}`, body, {
       headers: {
-        Cookie: cookieStore
-          .getAll()
-          .map((cookie) => `${cookie.name}=${cookie.value}`)
-          .join("; "),
+        Cookie: cookieStore.toString(),
       },
     });
     return NextResponse.json(res.data, { status: res.status });

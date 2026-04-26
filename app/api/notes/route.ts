@@ -20,10 +20,7 @@ export async function GET(request: NextRequest) {
         ...(tag && { tag }),
       },
       headers: {
-        Cookie: cookieStore
-          .getAll()
-          .map((cookie) => `${cookie.name}=${cookie.value}`)
-          .join("; "),
+        Cookie: cookieStore.toString(),
       },
     });
 
@@ -52,10 +49,7 @@ export async function POST(request: NextRequest) {
 
     const res = await api.post("/notes", body, {
       headers: {
-        Cookie: cookieStore
-          .getAll()
-          .map((cookie) => `${cookie.name}=${cookie.value}`)
-          .join("; "),
+        Cookie: cookieStore.toString(),
         "Content-Type": "application/json",
       },
     });
