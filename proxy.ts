@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { checkSession } from "./lib/api/serverApi";
-import { parse } from "cookie";
 
 const isPrivateRoute = (pathname: string) =>
   pathname.startsWith("/profile") || pathname.startsWith("/notes");

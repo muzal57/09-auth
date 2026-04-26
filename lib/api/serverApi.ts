@@ -73,7 +73,7 @@ export const getMe = async () => {
   return response.data;
 };
 
-export const checkSession = async () => {
-  const auth = await getAuthHeaders();
+export const checkSession = async (cookieHeader?: string) => {
+  const auth = await getAuthHeaders(cookieHeader);
   return axiosInstance.get<{ success: boolean }>("/auth/session", auth);
 };
