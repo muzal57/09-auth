@@ -12,11 +12,11 @@ export async function GET() {
     const refreshToken = cookieStore.get("refreshToken")?.value;
 
     if (accessToken) {
-      return NextResponse.json({ success: true });
+      return NextResponse.json({ success: true }, { status: 200 });
     }
 
     if (!refreshToken) {
-      return NextResponse.json({ success: false });
+      return NextResponse.json({ success: false }, { status: 200 });
     }
 
     const apiRes = await api.get("auth/session", {
@@ -43,16 +43,16 @@ export async function GET() {
         if (parsed.refreshToken)
           cookieStore.set("refreshToken", parsed.refreshToken, options);
       }
-      return NextResponse.json({ success: true });
+      return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    return NextResponse.json({ success: false });
+    return NextResponse.json({ success: false }, { status: 200 });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      return NextResponse.json({ success: false });
+      return NextResponse.json({ success: false }, { status: 200 });
     }
     logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ success: false });
+    return NextResponse.json({ success: false }, { status: 200 });
   }
 }
