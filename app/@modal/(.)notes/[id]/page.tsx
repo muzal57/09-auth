@@ -3,8 +3,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { fetchNoteById } from "@/lib/api";
-import NotePreview from "@/app/notes/[id]/NotePreview.client";
+import { fetchNoteById } from "@/lib/api/serverApi";
+import NotePreview from "./NotePreview.client";
 
 interface ModalNotePageProps {
   params: Promise<{

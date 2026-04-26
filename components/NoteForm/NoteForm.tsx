@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { addNote } from "@/lib/api";
+import { createNote } from "@/lib/api/clientApi";
 import { NoteFormData } from "@/types/note";
 import { useNoteStore, initialDraft } from "@/lib/store/noteStore";
 import css from "./NoteForm.module.css";
@@ -40,13 +40,13 @@ const NoteForm = ({ onCancel }: NoteFormProps) => {
   }, [draft]);
 
   const addNoteMutation = useMutation({
-    mutationFn: addNote,
+    mutationFn: createNote,
     onSuccess: () => {
       clearDraft();
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       router.back();
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
       setErrors({ submit: error?.message || "Failed to add note" });
       setIsSubmitting(false);
     },

@@ -1,5 +1,5 @@
 import { Note } from "@/types/note";
-import NoteItem from "../notes/NoteItem";
+import NoteItem from "@/components/NoteItem/NoteItem";
 import css from "./NoteList.module.css";
 
 interface NoteListProps {

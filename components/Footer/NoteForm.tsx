@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addNote } from "@/lib/api";
+import { createNote as addNote } from "@/lib/api/clientApi";
 import { NoteFormData } from "@/types/note";
 import css from "./NoteForm.module.css";
 
